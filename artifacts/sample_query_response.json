@@ -1,0 +1,37 @@
+{
+  "artifact_version": "1.0",
+  "scope": "English synthetic single-query offline demo",
+  "recorded_at": "2026-08-28",
+  "runtime": {
+    "parser": "docling_hybrid",
+    "embedding": "sha256-hash-256",
+    "reranker": "none",
+    "generator": "local_rule_fallback",
+    "network_required": false
+  },
+  "input": {
+    "document": {
+      "title": "EvidenceRAG Public Demo Study",
+      "page_count": 4,
+      "chunk_count": 8,
+      "content_origin": "synthetic"
+    },
+    "question": "What problem does the synthetic study address, and what D3QN controller does it propose?",
+    "top_k": 4
+  },
+  "output": {
+    "status": "completed",
+    "review_verdict": "sufficient",
+    "refused_due_to_insufficient_evidence": false,
+    "answer_summary": "The synthetic study addresses slow adaptation and unstable value estimates in simulated sensor interference, and proposes a D3QN controller.",
+    "evidence_count": 4,
+    "citation_count": 4,
+    "citation_pages": [1, 2, 2, 1],
+    "resolved_citation_detail": true
+  },
+  "boundaries": [
+    "This artifact verifies one fixed offline workflow, not production performance.",
+    "The source document is synthetic and contains no private research data or third-party paper text.",
+    "The offline hash-embedding route is not presented as BGE retrieval quality."
+  ]
+}

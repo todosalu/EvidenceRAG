@@ -1,0 +1,37 @@
+{
+  "artifact_version": "1.0",
+  "scope": "中文合成文档单次离线问答演示",
+  "recorded_at": "2026-08-28",
+  "runtime": {
+    "parser": "docling_hybrid",
+    "embedding": "sha256-hash-256",
+    "reranker": "none",
+    "generator": "local_rule_fallback",
+    "network_required": false
+  },
+  "input": {
+    "document": {
+      "title": "EvidenceRAG 公开演示研究",
+      "page_count": 4,
+      "chunk_count": 8,
+      "content_origin": "synthetic_bilingual"
+    },
+    "question": "请概括该演示研究关注的问题与 D3QN 方案。",
+    "top_k": 2
+  },
+  "output": {
+    "status": "completed",
+    "review_verdict": "sufficient",
+    "refused_due_to_insufficient_evidence": false,
+    "answer_summary": "该合成研究关注模拟传感器干扰环境中的适应速度慢和价值估计不稳定问题，并提出一种基于竞争双深度 Q 网络（D3QN）的控制器。",
+    "evidence_count": 2,
+    "citation_count": 2,
+    "citation_pages": [3, 3],
+    "resolved_citation_detail": true
+  },
+  "boundaries": [
+    "该材料仅验证一个固定离线工作流，不代表生产环境性能。",
+    "输入文档为中英双语合成材料，不包含私人研究数据或第三方论文原文。",
+    "离线 Hash Embedding 路线不等同于 BGE 检索质量。"
+  ]
+}

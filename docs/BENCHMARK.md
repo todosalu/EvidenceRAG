@@ -32,4 +32,4 @@ Using 112 training queries to select `k=10` and a BM25:BGE weight ratio of `0.5:
 
 ## Reproducibility boundary
 
-Aggregate methodology and results are public. Full model assets, raw per-query analyses, private domain-paper chunks, and unpublished experimental artifacts are intentionally withheld. They can be inspected in an interview demonstration.
+Aggregate methodology and results are public. Full model assets, raw per-query analyses, private domain-paper chunks, and unpublished experimental artifacts are intentionally withheld and are not distributed through this public repository.
