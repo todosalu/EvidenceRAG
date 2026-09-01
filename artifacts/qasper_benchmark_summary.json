@@ -1,0 +1,57 @@
+{
+  "artifact_version": "1.0",
+  "dataset": "QASPER v0.3 dev",
+  "evaluation_scope": "known-paper retrieval over structured full text; text evidence only",
+  "configuration": {
+    "documents": 100,
+    "chunks": 4830,
+    "queries": 100,
+    "questions_per_paper": 1,
+    "embedding": "BAAI/bge-small-en-v1.5",
+    "fusion": "weighted RRF k=10, BM25:BGE=0.5:1",
+    "candidate_k": 50,
+    "metric_aggregation": "macro average; best score across official answer annotations",
+    "evidence_alignment": "exact match after lowercase and whitespace normalization"
+  },
+  "selection": {
+    "questions_seen": 120,
+    "skipped_without_text_evidence": 18,
+    "skipped_unmapped_evidence": 2,
+    "questions_evaluated": 100
+  },
+  "summary": {
+    "bm25": {
+      "recall@1": 0.1973,
+      "recall@3": 0.3506,
+      "recall@5": 0.4831,
+      "mrr@5": 0.3503,
+      "ndcg@5": 0.3577,
+      "precision@5": 0.12,
+      "evidence_f1@5": 0.1862
+    },
+    "bge": {
+      "recall@1": 0.2575,
+      "recall@3": 0.4623,
+      "recall@5": 0.5879,
+      "mrr@5": 0.4223,
+      "ndcg@5": 0.4439,
+      "precision@5": 0.148,
+      "evidence_f1@5": 0.2277
+    },
+    "weighted_rrf": {
+      "recall@1": 0.2325,
+      "recall@3": 0.4573,
+      "recall@5": 0.6029,
+      "mrr@5": 0.4217,
+      "ndcg@5": 0.4464,
+      "precision@5": 0.152,
+      "evidence_f1@5": 0.2339
+    }
+  },
+  "limitations": [
+    "This evaluates structured full-paper text retrieval, not PDF parsing.",
+    "Figure and table evidence marked FLOAT SELECTED is excluded.",
+    "Cross-paper retrieval and answer generation are not evaluated.",
+    "No significance test was run for route comparisons."
+  ]
+}

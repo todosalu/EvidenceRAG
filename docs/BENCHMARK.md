@@ -33,3 +33,34 @@ Using 112 training queries to select `k=10` and a BM25:BGE weight ratio of `0.5:
 ## Reproducibility boundary
 
 Aggregate methodology and results are public. Full model assets, raw per-query analyses, private domain-paper chunks, and unpublished experimental artifacts are intentionally withheld and are not distributed through this public repository.
+
+## QASPER structured full-paper retrieval
+
+### Dataset and protocol
+
+- Source: QASPER v0.3 development split with official answer and evidence annotations.
+- Scope: known-paper retrieval over structured full-paper text.
+- Documents: 100 papers, with at most one selected question per paper.
+- Index: 4,830 abstract or body-paragraph chunks.
+- Queries: 100 answerable questions with automatically aligned text evidence.
+- Alignment: exact paragraph match after lowercasing and whitespace normalization.
+- Routes: BM25, `BAAI/bge-small-en-v1.5`, and weighted RRF (`k=10`, BM25:BGE=`0.5:1`).
+- Aggregation: macro average; best score across official answer annotations.
+
+The deterministic selection scanned 120 questions. Eighteen had no text evidence and two could not be aligned automatically; no new manual labels were created.
+
+### Aggregate results
+
+| Route | Recall@1 | Recall@3 | Recall@5 | MRR@5 | nDCG@5 | Precision@5 | Evidence F1@5 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| BM25 | 0.1973 | 0.3506 | 0.4831 | 0.3503 | 0.3577 | 0.1200 | 0.1862 |
+| BGE | **0.2575** | **0.4623** | 0.5879 | **0.4223** | 0.4439 | 0.1480 | 0.2277 |
+| Weighted RRF | 0.2325 | 0.4573 | **0.6029** | 0.4217 | **0.4464** | **0.1520** | **0.2339** |
+
+Weighted RRF's Recall@5 point estimate was 24.80% above BM25 and 2.55% above BGE. No significance test was run, so stable superiority over BGE is not claimed. BGE retained the highest Recall@1 and MRR@5 point estimates.
+
+### Boundary
+
+This evaluates text-evidence retrieval within a known structured full paper. It does not validate PDF parsing, page mapping, figure/table evidence, cross-paper retrieval, or answer generation. Evidence marked `FLOAT SELECTED` is excluded. Evidence F1@5 is whitespace-normalized paragraph F1 at a fixed Top 5, not answer F1.
+
+Sources: [QASPER paper](https://aclanthology.org/2021.naacl-main.365/), [official dataset](https://huggingface.co/datasets/allenai/qasper).
