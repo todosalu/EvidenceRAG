@@ -25,7 +25,7 @@ EvidenceRAG 是一个以证据可追溯为核心的个人学术 PDF 问答项目
 
 相较 BM25，BGE 的 Recall@5 提升 24.03%，MRR@5 提升 16.92%。等权 RRF 和启发式重排均未超过 BGE，因此本仓库不将其描述为已验证提升。详见 [Benchmark](docs/BENCHMARK.md)。
 
-完整论文结构化文本评测采用 QASPER 官方证据标注，固定覆盖 100 篇论文、100 条 Query 和 4,830 个段落 Chunk。BM25、BGE、加权 RRF 的 Recall@5 分别为 0.4831、0.5879、0.6029。加权 RRF 仅在点估计上略高于 BGE，尚未做显著性检验。该评测不等同于 PDF 解析或答案生成评测，详见 [Benchmark](docs/BENCHMARK.md) 和[机器可读摘要](artifacts/qasper_benchmark_summary.json)。
+完整论文结构化文本评测采用 QASPER 官方证据标注，固定覆盖 100 篇论文、100 条 Query 和 4,830 个段落 Chunk。BM25、BGE、加权 RRF、轻量 Cross-Encoder 重排的 Recall@5 分别为 0.4831、0.5879、0.6029、0.6995。Cross-Encoder 对加权 RRF Top-20 重排后，Recall@5 点估计提高 16.02%；该提升尚未做显著性检验。该评测不等同于 PDF 解析或答案生成评测，详见 [Benchmark](docs/BENCHMARK.md) 和[机器可读摘要](artifacts/qasper_benchmark_summary.json)。
 
 ## 架构
 
@@ -38,7 +38,8 @@ flowchart LR
     CHUNK --> VECTOR["BGE / Hash Embedding"]
     BM25 --> RRF["加权 RRF"]
     VECTOR --> RRF
-    RRF --> REVIEW["证据审校"]
+    RRF --> RERANK["轻量 Cross-Encoder 重排"]
+    RERANK --> REVIEW["证据审校"]
     REVIEW -->|证据充分| ANSWER["答案 + 引用"]
     REVIEW -->|证据不足| REWRITE["受限查询改写 / 拒答"]
     REWRITE --> RRF

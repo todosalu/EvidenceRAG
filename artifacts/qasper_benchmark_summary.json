@@ -1,5 +1,5 @@
 {
-  "artifact_version": "1.0",
+  "artifact_version": "1.1",
   "dataset": "QASPER v0.3 dev",
   "evaluation_scope": "known-paper retrieval over structured full text; text evidence only",
   "configuration": {
@@ -10,6 +10,12 @@
     "embedding": "BAAI/bge-small-en-v1.5",
     "fusion": "weighted RRF k=10, BM25:BGE=0.5:1",
     "candidate_k": 50,
+    "reranker": "cross-encoder/ms-marco-MiniLM-L6-v2",
+    "rerank_source": "weighted RRF",
+    "rerank_depth": 20,
+    "rerank_batch_size": 32,
+    "rerank_seconds": 91.568,
+    "amortized_rerank_ms_per_query": 915.682,
     "metric_aggregation": "macro average; best score across official answer annotations",
     "evidence_alignment": "exact match after lowercase and whitespace normalization"
   },
@@ -46,6 +52,15 @@
       "ndcg@5": 0.4464,
       "precision@5": 0.152,
       "evidence_f1@5": 0.2339
+    },
+    "cross_encoder": {
+      "recall@1": 0.3089,
+      "recall@3": 0.562,
+      "recall@5": 0.6995,
+      "mrr@5": 0.5092,
+      "ndcg@5": 0.5292,
+      "precision@5": 0.178,
+      "evidence_f1@5": 0.2722
     }
   },
   "limitations": [
