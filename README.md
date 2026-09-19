@@ -27,6 +27,8 @@ EvidenceRAG 是一个以证据可追溯为核心的个人学术 PDF 问答项目
 
 完整论文结构化文本评测采用 QASPER 官方证据标注，固定覆盖 100 篇论文、100 条 Query 和 4,830 个段落 Chunk。BM25、BGE、加权 RRF、轻量 Cross-Encoder 重排的 Recall@5 分别为 0.4831、0.5879、0.6029、0.6995。Cross-Encoder 对加权 RRF Top-20 重排后，Recall@5 点估计提高 16.02%；该提升尚未做显著性检验。该评测不等同于 PDF 解析或答案生成评测，详见 [Benchmark](docs/BENCHMARK.md) 和[机器可读摘要](artifacts/qasper_benchmark_summary.json)。
 
+补充的中英文领域诊断固定使用现有 BM25 + BGE + weighted RRF 架构，仅将英文 embedding 影子替换为 `BAAI/bge-m3`。70 个原子查询上，BGE Recall@5 从 0.2954 提升至 0.3351；13 个中文查询上从 0.1674 提升至 0.4244。当前 RRF 的 Recall@10/Hit@10 为 0.5829/0.9714。该组标签仍有 65 个待人工复核，因此只作为模型选择诊断，不更新生产参数，也不作为正式 Benchmark。详见 [Benchmark](docs/BENCHMARK.md) 和[脱敏聚合摘要](artifacts/bge_m3_domain_diagnostic_summary.json)。
+
 ## 架构
 
 ```mermaid

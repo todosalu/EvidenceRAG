@@ -65,3 +65,17 @@ Cross-Encoder reranking improved the Recall@5 point estimate by 16.02% and Evide
 This evaluates text-evidence retrieval within a known structured full paper. It does not validate PDF parsing, page mapping, figure/table evidence, cross-paper retrieval, or answer generation. Evidence marked `FLOAT SELECTED` is excluded. Evidence F1@5 is whitespace-normalized paragraph F1 at a fixed Top 5, not answer F1.
 
 Sources: [QASPER paper](https://aclanthology.org/2021.naacl-main.365/), [official dataset](https://huggingface.co/datasets/allenai/qasper), [Cross-Encoder model card](https://huggingface.co/cross-encoder/ms-marco-MiniLM-L6-v2).
+
+## BGE-M3 multilingual domain diagnostic
+
+This supplementary diagnostic holds the retrieval architecture fixed and changes only the embedding model from `BAAI/bge-small-en-v1.5` to `BAAI/bge-m3`. Both models use the same 5-paper, 230-chunk corpus, 70 atomic queries, BM25 route, and weighted RRF configuration (`k=10`, BM25:BGE=`0.5:1`). BGE-M3 uses a separate shadow index.
+
+| Route | Recall@5 | Recall@10 | Hit@5 | Hit@10 | MRR@5 |
+|---|---:|---:|---:|---:|---:|
+| BGE-small-en-v1.5 | 0.2954 | — | 0.7571 | — | 0.4955 |
+| BGE-M3 | 0.3351 | 0.5381 | 0.8286 | 0.9571 | 0.6324 |
+| BM25 + BGE-M3 weighted RRF | 0.3434 | 0.5829 | 0.8286 | 0.9714 | 0.6645 |
+
+For the 13 Chinese queries, raw BGE Recall@5 increased from 0.1674 to 0.4244 and Hit@5 from 0.4615 to 0.9231. For the 57 English queries, raw BGE Recall@5 changed from 0.3246 to 0.3147. An 84-combination RRF sweep improved the best Recall@10 point estimate to 0.5927, less than one percentage point above the fixed configuration, so the public default is unchanged.
+
+Only 5 of the 70 query labels are human-approved; the remaining 65 are provisional. These results are therefore published as a model-selection diagnostic, not a production claim or formal benchmark. Raw queries, paper chunks, model files, vector indexes, and per-query outputs remain private. The sanitized aggregate and source-output hashes are available in [`artifacts/bge_m3_domain_diagnostic_summary.json`](../artifacts/bge_m3_domain_diagnostic_summary.json).

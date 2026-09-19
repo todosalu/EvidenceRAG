@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "status": "diagnostic_pending_human_review",
+  "run_date": "2026-09-19",
+  "scope": {
+    "documents": 5,
+    "chunks": 230,
+    "atomic_queries": 70,
+    "english_queries": 57,
+    "chinese_queries": 13,
+    "human_approved_queries": 5,
+    "provisional_queries": 65
+  },
+  "fixed_architecture": {
+    "routes": ["BM25", "BGE", "weighted RRF"],
+    "rrf_k": 10,
+    "bm25_weight": 0.5,
+    "bge_weight": 1.0,
+    "production_parameters_changed": false
+  },
+  "model_comparison": {
+    "BAAI/bge-small-en-v1.5": {
+      "all": {"recall@5": 0.2954, "hit@5": 0.7571, "mrr@5": 0.4955},
+      "en": {"recall@5": 0.3246, "hit@5": 0.8246},
+      "zh": {"recall@5": 0.1674, "hit@5": 0.4615}
+    },
+    "BAAI/bge-m3": {
+      "all": {"recall@5": 0.3351, "recall@10": 0.5381, "hit@5": 0.8286, "hit@10": 0.9571, "mrr@5": 0.6324},
+      "en": {"recall@5": 0.3147, "hit@5": 0.8070},
+      "zh": {"recall@5": 0.4244, "hit@5": 0.9231}
+    }
+  },
+  "fixed_weighted_rrf_with_bge_m3": {
+    "recall@5": 0.3434,
+    "recall@10": 0.5829,
+    "hit@5": 0.8286,
+    "hit@10": 0.9714,
+    "mrr@5": 0.6645,
+    "ndcg@5": 0.4672
+  },
+  "rrf_grid_diagnostic": {
+    "combinations": 84,
+    "best_recall@10": 0.5927,
+    "best_recall@10_parameters": {"k": 5, "bm25_weight": 0.4, "bge_weight": 0.6},
+    "adopted": false
+  },
+  "private_source_sha256": {
+    "v3_four_route_bge_small_en_k10_2026-09-19.json": "69570b5e7a626caa311e2fa02daedd8360fc677fd25111dce3dc931249caf6bb",
+    "v3_four_route_bge_m3_2026-09-19.json": "1b6e1b0b469118939de6c31b35657af3ec1b6608e02bb26701ace7d6ea61b502",
+    "v3_rrf_grid_bge_m3_2026-09-19.json": "45a49df3f2068d07cc75552285105921a5bd3b5672d1edb54230c9a5c1ca8318"
+  },
+  "publication_boundary": "Aggregate diagnostic only; raw papers, chunks, query-level outputs, model files, and vector indexes are withheld."
+}
